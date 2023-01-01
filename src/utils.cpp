@@ -1,34 +1,33 @@
-#include <iostream>
-#include "utils.h"
+#include "utils.hpp"
+#include "error.hpp"
 
-std::string parse_method(std::string client_msg)
+std::string parse_method(char request[])
 {
-  std::string method = "";
+  std::string method;
 
-  for (int i = 0; i < (int)client_msg.size(); i++)
+  for (int i = 0; i < 4; i++)
   {
-    if (client_msg[i] == ' ')
+    if (request[i] == ' ')
       break;
-    method += client_msg[i];
+    method += request[i];
   }
 
   return method;
 }
-
-std::string parse_url(std::string client_msg)
+std::string parse_url(char request[])
 {
   int flag = 0;
   std::string url = "";
 
-  for (int i = 0; i < (int)client_msg.size(); i++)
+  for (int i = 0; i < 100; i++)
   {
     if (flag == 1)
     {
-      if (client_msg[i] == ' ')
+      if (request[i] == ' ')
         break;
-      url += client_msg[i];
+      url += request[i];
     }
-    else if (flag == 0 && client_msg[i] == ' ')
+    else if (flag == 0 && request[i] == ' ')
     {
       flag = 1;
     }
@@ -37,13 +36,14 @@ std::string parse_url(std::string client_msg)
   return url;
 }
 
-std::string parse_ext(std::string url)
+std::string get_cwd()
 {
+  // get current directory
+  char cwd[PATH_MAX];
+  if (getcwd(cwd, sizeof(cwd)) == NULL)
+  {
+    err_and_exit("Unable to get current working directory");
+  }
 
-  std::string delimiter = ".";
-  int len = url.size();
-
-  std::string ext = url.substr(url.find(delimiter), len);
-
-  return ext;
+  return std::string(cwd);
 }

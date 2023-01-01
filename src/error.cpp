@@ -1,5 +1,4 @@
-#include "error.h"
-#include <iostream>
+#include "error.hpp"
 
 // Error Handling
 void err_and_exit(std::string msg)

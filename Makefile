@@ -14,9 +14,8 @@ $(TARGET): $(OBJS)
 	$(TARGET)
 
 
-%.o: %.cpp %.h
+%.o: %.cpp %.hpp
 	$(CC) -c $(CCFLAGS) $< -o $@
-
 
 .PHONY: clean
 clean:

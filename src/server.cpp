@@ -1,19 +1,13 @@
-#include <iostream>
-#include <cstring>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include "server.hpp"
+#include "error.hpp"
+#include "request.hpp"
 
-#include "request.h"
-#include "server.h"
-#include "error.h"
+#define MAX_QUEUE 20
 
-void listen_server(int socket_fd, int MAXQUEUE);
+void listen_server(int socket_fd);
 
 void create_server(int PORT)
 {
-  int MAXQUEUE = 20;
   // Create a Socket
   int socket_fd, set = 1;
   if ((socket_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -31,13 +25,13 @@ void create_server(int PORT)
     err_and_exit("Binding failed");
 
   // Start Listening
-  listen_server(socket_fd, MAXQUEUE);
+  listen_server(socket_fd);
 }
 
-void listen_server(int socket_fd, int MAXQUEUE)
+void listen_server(int socket_fd)
 {
   // Start Listening
-  if ((listen(socket_fd, MAXQUEUE)) == -1)
+  if ((listen(socket_fd, MAX_QUEUE)) == -1)
     err_and_exit("Unable To start Listening");
   else
   {
@@ -58,11 +52,6 @@ void listen_server(int socket_fd, int MAXQUEUE)
     if ((conn = accept(socket_fd, (struct sockaddr *)&client, &clientLen)) < 0)
       err_and_exit("Unable to connect");
 
-    // Receive Client Request
-    char buffer[30000] = {0};
-    recv(conn, buffer, 30000, 0);
-
-    // Send Response and end connection
-    handle_request(conn, buffer);
-  }
+    handle_request(conn);
+    }
 }
