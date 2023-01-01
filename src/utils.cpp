@@ -36,6 +36,17 @@ std::string parse_url(char request[])
   return url;
 }
 
+std::string parse_ext(std::string url)
+{
+  std::string delimiter = ".";
+  int pos = url.find(delimiter);
+  if (pos == -1)
+    return "NA";
+
+  std::string ext = url.substr(pos, url.size());
+  return ext;
+}
+
 std::string get_cwd()
 {
   // get current directory
