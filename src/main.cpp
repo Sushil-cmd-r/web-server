@@ -1,8 +1,11 @@
+#include <iostream>
 #include "server.hpp"
 
+using namespace std;
 #define PORT 5000
 
 int main()
 {
-  create_server(PORT);
+  HTTP::Server server(PORT);
+  server.start_listening();
 }

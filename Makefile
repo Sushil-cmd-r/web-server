@@ -10,13 +10,13 @@ OBJS:= $(SRCS:.cpp=.o)
 
 
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) $(CCFLAGS) -o $(TARGET)
-	$(TARGET)
+	$(CC) $(OBJS) $(CPPFLAGS) -o $(TARGET)
 
 
-%.o: %.cpp %.hpp
-	$(CC) -c $(CCFLAGS) $< -o $@
+%.o: %.cpp %.h
+	$(CC) -c $(CPPFLAGS) $< -o $@
 
 .PHONY: clean
 clean:
 	rm src/*.o
+	rm $(TARGET)

@@ -1,11 +1,11 @@
 #ifndef _REQUEST_HPP
-#define _REQUEST_HPP
+#define _REQUEST_HPP 1
 
 #include <iostream>
-#include <netinet/in.h>
-#include <unistd.h>
 #include <cstring>
+#include <arpa/inet.h>
+#include <unistd.h>
 
-void handle_request(int conn);
+void handle_request(int *_conn);
 
 #endif
