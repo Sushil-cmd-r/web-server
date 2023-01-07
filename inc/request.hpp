@@ -6,6 +6,10 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#include "utils.hpp"
+
+using namespace std;
+
 void handle_request(int *_conn);
 
 #endif

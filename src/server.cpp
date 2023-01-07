@@ -46,6 +46,7 @@ void Server::start_listening()
     if ((conn = accept(socket_fd, (struct sockaddr *)&client, &clientLen)) < 0)
       err_and_exit("Unable to connect");
 
+    // add work in work queue
     tp.add_work(&conn);
   }
 }
